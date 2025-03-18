@@ -41,7 +41,7 @@ class NissanLeafObdBleDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=DOMAIN,
             update_interval=FAST_POLL_INTERVAL,
-            always_update=True,
+            always_update=False if options["cache_values"] else True
         )
         self._address = address
         self.api = api
