@@ -38,8 +38,11 @@ class NissanLeafObdBleApiClient:
             # the first command is the Mystery command. If this doesn't have a response, then none of the other will
             if command.name == "unknown" and len(response.messages) == 0:
                 break
-            if response.value is not None:
-                data.update(response.value)  # send the command, and parse the response
+            # Any fail results in an empty result for the whole scan.
+            if response.value is None:
+                data = {}
+                break
+            data.update(response.value)  # send the command, and parse the response
         _LOGGER.debug("Returning data: %s", data)
         await api.close()
         return data
