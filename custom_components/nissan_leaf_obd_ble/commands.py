@@ -70,10 +70,6 @@ logger = logging.getLogger(__name__)
 
 # NOTE: the NAME field will be used as the dict key for that sensor
 # NOTE: commands MUST be in PID order, one command per PID (for fast lookup using __mode1__[pid])
-# gw1urf - I can't see anything in the code that requires in-order. Going to try changing
-# the order, since I'm much more interested in SOC (currently last item) than e.g. power switch
-# state (currently first item and pretty much bound to be on). If this works, I'm going to do much
-# more radical re-ordering.
 
 # see OBDCommand.py for descriptions & purposes for each of these fields
 
@@ -81,7 +77,6 @@ logger = logging.getLogger(__name__)
 leaf_commands = {
     #          name                     description                     cmd             bytes decoder               header
     "unknown":               OBDCommand("unknown",               "Mystery command",              b"0210C0",      0,  unknown,                header=b"797",),
-    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"022101",      53, lbc,                    header=b"79B",),
     "power_switch":          OBDCommand("power_switch",          "Power switch status",          b"03221304",    5,  power_switch,           header=b"797",),
     "gear_position":         OBDCommand("gear_position",         "Gear position",                b"03221156",    4,  gear_position,          header=b"797",),
     "bat_12v_voltage":       OBDCommand("bat_12v_voltage",       "12V battery voltage",          b"03221103",    4,  bat_12v_voltage,        header=b"797",),
@@ -111,5 +106,6 @@ leaf_commands = {
     "tp_rl":                 OBDCommand("tp_rl",                 "Tyre pressure rear left",      b"03220e28",    4,  tp_rl,                  header=b"743",),
     "range_remaining":       OBDCommand("range_remaining",       "Remaining range (km)",         b"03220e24",    13, range_remaining,        header=b"743",),
 
+    "lbc":                   OBDCommand("lbc",                   "Li-ion battery controller",    b"022101",      53, lbc,                    header=b"79B",),
 }
 # fmt: on
